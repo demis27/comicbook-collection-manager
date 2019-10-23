@@ -1,36 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.demis27.cbc.api</groupId>
+
+  <parent>
+    <groupId>org.demis27.cbc</groupId>
+    <artifactId>cbc</artifactId>
+    <version>0.1</version>
+  </parent>
   <artifactId>api</artifactId>
-  <version>0.1</version>
+
   <properties>
-    <micronaut.version>1.2.5</micronaut.version>
-    <jdk.version>1.8</jdk.version>
-    <maven.compiler.target>${jdk.version}</maven.compiler.target>
-    <maven.compiler.source>${jdk.version}</maven.compiler.source>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <exec.mainClass>org.demis27.cbc.api.Application</exec.mainClass>
-    <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
-    <maven-failsafe-plugin.version>2.22.2</maven-failsafe-plugin.version>
   </properties>
-  <repositories>
-    <repository>
-      <id>jcenter.bintray.com</id>
-      <url>https://jcenter.bintray.com</url>
-    </repository>
-  </repositories>
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>io.micronaut</groupId>
-        <artifactId>micronaut-bom</artifactId>
-        <version>${micronaut.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
+
   <dependencies>
     <dependency>
       <groupId>io.micronaut</groupId>
@@ -94,7 +77,14 @@
       <version>2.0.1</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.demis27.cbc</groupId>
+      <artifactId>common</artifactId>
+      <version>0.1</version>
+      <scope>compile</scope>
+    </dependency>
   </dependencies>
+
   <build>
     <plugins>
       <plugin>
@@ -109,10 +99,12 @@
             </goals>
             <configuration>
               <transformers>
-                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                <transformer
+                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                   <mainClass>${exec.mainClass}</mainClass>
                 </transformer>
-                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                <transformer
+                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
               </transformers>
             </configuration>
           </execution>
@@ -135,90 +127,5 @@
         </configuration>
       </plugin>
     </plugins>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>${maven-surefire-plugin.version}</version>
-          <configuration>
-            <detail>true</detail>
-            <includes>
-              <include>%regex[.*]</include>
-            </includes>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-failsafe-plugin</artifactId>
-          <version>${maven-failsafe-plugin.version}</version>
-          <executions>
-            <execution>
-              <goals>
-                <goal>integration-test</goal>
-                <goal>verify</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.7.0</version>
-          <configuration>
-            <compilerArgs>
-              <arg>-parameters</arg>
-            </compilerArgs>
-            <annotationProcessorPaths>
-                  <path>
-                    <groupId>io.micronaut</groupId>
-                    <artifactId>micronaut-graal</artifactId>
-                    <version>1.2.5</version>
-                  </path>
-                  <path>
-                    <groupId>io.micronaut</groupId>
-                    <artifactId>micronaut-inject-java</artifactId>
-                    <version>1.2.5</version>
-                  </path>
-                  <path>
-                    <groupId>io.micronaut</groupId>
-                    <artifactId>micronaut-validation</artifactId>
-                    <version>1.2.5</version>
-                  </path>
-            </annotationProcessorPaths>
-          </configuration>
-          <executions>
-            <execution>
-              <id>test-compile</id>
-              <goals>
-                <goal>testCompile</goal>
-              </goals>
-              <configuration>
-                <compilerArgs>
-                  <arg>-parameters</arg>
-                </compilerArgs>
-                <annotationProcessorPaths>
-                  <path>
-                    <groupId>io.micronaut</groupId>
-                    <artifactId>micronaut-graal</artifactId>
-                    <version>1.2.5</version>
-                  </path>
-                  <path>
-                    <groupId>io.micronaut</groupId>
-                    <artifactId>micronaut-inject-java</artifactId>
-                    <version>1.2.5</version>
-                  </path>
-                  <path>
-                    <groupId>io.micronaut</groupId>
-                    <artifactId>micronaut-validation</artifactId>
-                    <version>1.2.5</version>
-                  </path>
-                </annotationProcessorPaths>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-      </plugins>
-    </pluginManagement>
   </build>
 </project>
